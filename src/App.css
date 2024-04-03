@@ -1,3 +1,17 @@
 .App {
   text-align: center;
+  background-color: antiquewhite;
+}
+.todoinput{
+  border: 1px solid gray;
+  margin-left: 20%;
+  margin-right: 20%;
+  padding: 3%;
+}
+.button{
+  color: blue;
+  margin: 10px;
+  background-color: aquamarine;
+  padding: 5px;
+  border-radius: 5px;
 }
