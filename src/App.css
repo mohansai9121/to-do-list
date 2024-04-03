@@ -15,3 +15,28 @@
   padding: 5px;
   border-radius: 5px;
 }
+.todos{
+  border: 2px solid royalblue;
+  margin-top: 10px;
+  margin-left: 10%;
+  margin-right: 10%;
+  background-color: cadetblue;
+}
+.completedButton{
+  background-color: greenyellow;
+  margin: 10px;
+  padding: 4px;
+  border-radius: 5px;
+}
+.completedButton:hover{
+  background-color: green;
+}
+.deleteButton{
+  background-color: orangered;
+  margin: 10px;
+  padding: 4px;
+  border-radius: 5px;
+}
+.deleteButton:hover{
+  background-color: darkred;
+}
