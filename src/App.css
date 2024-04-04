@@ -3,10 +3,12 @@
   background-color: antiquewhite;
 }
 .todoinput{
-  border: 1px solid gray;
+  border: 7px solid gray;
   margin-left: 20%;
   margin-right: 20%;
   padding: 3%;
+  border-radius: 20px;
+  background-color: burlywood;
 }
 .button{
   color: blue;
@@ -39,4 +41,16 @@
 }
 .deleteButton:hover{
   background-color: darkred;
+}
+.addButton{
+  border: 2px solid darkgreen;
+  background-color: greenyellow;
+  color: black;
+  padding: 5px;
+  border-radius: 6px;
+}
+.addButton:hover{
+  background-color: darkgreen;
+  padding: 6px;
+  color: aliceblue;
 }

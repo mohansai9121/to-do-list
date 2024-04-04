@@ -21,6 +21,7 @@ function App() {
     newlist.push(todoItem)
     localStorage.setItem("allTodos",JSON.stringify(newlist))
     setTodosList(newlist)
+    alert(`${todoItem.newtitle} added succesfully to your To-Do-List`)
     setTitle('')
     setDescription('')
   }
@@ -37,6 +38,7 @@ function App() {
       ...todoslist[idx],
       time:completedAt
     }
+    alert(`${completed.newtitle} completed, check in completed list`)
     console.log(completed)
     let comList = [...completedList]
     comList.push(completed)
@@ -67,15 +69,17 @@ function App() {
   }, [])
   return (
     <div className="App">
-      <h2 style={{color:'blue'}}>To do List</h2>
+      <h1 style={{color:'blue'}}>To do List</h1>
       <img src='todopic.jpg' alt='ToDoList' title='Todo List' width='200px' height='250px'/>
+      <p>Get notified by your daily activities completed or not.</p>
+      <p>You can add and also delete your activities...</p>
       <div className='todoinput'>
         <form>
           <label><b>Title:</b></label>{' '}
           <input type='text' value={title} placeholder='Title for the thing to do...' onChange={(e)=>setTitle(e.target.value)} required/><br/><br/>
           <label><b>Description:</b></label>{' '}
           <input type='textarea' value={description} placeholder='Description for the title...' onChange={e=>setDescription(e.target.value)} required/><br/><br/>
-          <Button appearance='ghost' color='green' onClick={submitHandler}>Add</Button>
+          <Button appearance='ghost' color='green' onClick={submitHandler} className='addButton'>Add</Button>
         </form>
       </div>
       <ButtonToolbar>
