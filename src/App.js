@@ -1,7 +1,7 @@
 import { Button, ButtonToolbar } from 'rsuite';
 import './App.css';
-import { useEffect, useState } from 'react';
 import './todopic.jpg'
+import { useEffect, useState } from 'react';
 import { TiTick } from "react-icons/ti";
 import { MdDelete } from "react-icons/md";
 
@@ -10,7 +10,7 @@ function App() {
   const [description, setDescription] = useState('')
   const [todoslist, setTodosList] = useState([])
   const [isComplete, setIscomplete] = useState(false)
-  let completed = []
+  const [completedList, setCompletedList] = useState([])
   const submitHandler = (e)=>{
     e.preventDefault()
     let todoItem={
@@ -20,37 +20,61 @@ function App() {
     let newlist = [...todoslist]
     newlist.push(todoItem)
     localStorage.setItem("allTodos",JSON.stringify(newlist))
-    let todos = JSON.parse(localStorage.getItem("allTodos"))
-    if(todos){
-      setTodosList(todos)
-    }
+    setTodosList(newlist)
     setTitle('')
     setDescription('')
   }
   const completedHandler=(idx)=>{
-    completed.push(todoslist[idx])
-    todoslist.splice(idx,1)
+    let now = new Date()
+    let dd = now.getDate()
+    let mm = now.getMonth()
+    let yy = now.getFullYear()
+    let h = now.getHours()
+    let m = now.getMinutes()
+    let s = now.getSeconds()
+    let completedAt = 'Completed at:'+h+'hours:'+m+"minutes:"+s+"secs, on"+dd+"-"+mm+"-"+yy
+    let completed = {
+      ...todoslist[idx],
+      time:completedAt
+    }
+    console.log(completed)
+    let comList = [...completedList]
+    comList.push(completed)
+    setCompletedList(comList)
+    localStorage.setItem("completedTodos",JSON.stringify(comList))
   }
   const deleteHandler1=(idx)=>{
-    completed.splice(idx,1)
+    let delTodos = [...completedList]
+    delTodos.splice(idx,1)
+    setCompletedList(delTodos)
+    localStorage.setItem("completedTodos",JSON.stringify(delTodos))
   }
   const deleteHandler = (idx)=>{
-    todoslist.splice(idx,1)
+    let allTodos = [...todoslist]
+    allTodos.splice(idx,1)
+    setTodosList(allTodos)
+    localStorage.setItem("allTodos", JSON.stringify(allTodos))
   }
   useEffect(()=>{
-    console.log(todoslist)
-
-  }, [todoslist])
+    let alltodos = JSON.parse(localStorage.getItem("allTodos"))
+    if(alltodos){
+      setTodosList(alltodos)
+    }
+    let completedOnes = JSON.parse(localStorage.getItem("completedTodos"))
+    if(completedOnes){
+      setCompletedList(completedOnes)
+    }
+  }, [])
   return (
     <div className="App">
       <h2 style={{color:'blue'}}>To do List</h2>
-      <img src='todopic.jpg' alt='to list pic' title='Todo List' width='200px' height='250px'/>
+      <img src='todopic.jpg' alt='ToDoList' title='Todo List' width='200px' height='250px'/>
       <div className='todoinput'>
         <form>
           <label><b>Title:</b></label>{' '}
-          <input type='text' value={title} placeholder='Title for the thing to do...' onChange={(e)=>setTitle(e.target.value)}/><br/><br/>
+          <input type='text' value={title} placeholder='Title for the thing to do...' onChange={(e)=>setTitle(e.target.value)} required/><br/><br/>
           <label><b>Description:</b></label>{' '}
-          <input type='textarea' value={description} placeholder='Description for the title...' onChange={e=>setDescription(e.target.value)} /><br/><br/>
+          <input type='textarea' value={description} placeholder='Description for the title...' onChange={e=>setDescription(e.target.value)} required/><br/><br/>
           <Button appearance='ghost' color='green' onClick={submitHandler}>Add</Button>
         </form>
       </div>
@@ -64,17 +88,18 @@ function App() {
             <div className='todos' key={index}>
               <h3>{activity.newtitle}</h3>
               <p>{activity.newdescription}</p>
-              <Button endIcon={<TiTick/>} className='completedButton' onClick={completedHandler}>Completed</Button>
-              <Button startIcon={<MdDelete/>} className='deleteButton' onClick={deleteHandler}>delete</Button>
+              <Button endIcon={<TiTick/>} className='completedButton' onClick={()=>completedHandler(index)}>Completed</Button>
+              <Button startIcon={<MdDelete/>} className='deleteButton' onClick={()=>deleteHandler(index)}>delete</Button>
             </div>
           )
         })}
-        {isComplete===true && completed.map((activity, index)=>{
+        {isComplete===true && completedList.map((activity, index)=>{
           return(
             <div className='todos' key={index}>
               <h3>{activity.newtitle}</h3>
               <p>{activity.newdescription}</p>
-              <Button startIcon={<MdDelete/>} className='deleteButton' onClick={deleteHandler1}>delete</Button>
+              <p>{activity.time}</p>
+              <Button startIcon={<MdDelete/>} className='deleteButton' onClick={()=>deleteHandler1(index)}>delete</Button>
             </div>
           )
         })}
