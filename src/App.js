@@ -1,6 +1,6 @@
 import { Button, ButtonToolbar } from 'rsuite';
 import './App.css';
-import './todopic.jpg'
+import todopic from './todopic.jpg';
 import { useEffect, useState } from 'react';
 import { TiTick } from "react-icons/ti";
 import { MdDelete } from "react-icons/md";
@@ -70,7 +70,7 @@ function App() {
   return (
     <div className="App">
       <h1 style={{color:'blue'}}>To do List</h1>
-      <img src='todopic.jpg' alt='ToDoList' title='Todo List' width='200px' height='250px'/>
+      <img src={todopic} alt='ToDoList' title='Todo List' width='200px' height='250px'/>
       <p>Get notified by your daily activities completed or not.</p>
       <p>You can add and also delete your activities...</p>
       <div className='todoinput'>
